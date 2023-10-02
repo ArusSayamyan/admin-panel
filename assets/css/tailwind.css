@@ -19,5 +19,13 @@ body {
         @apply uppercase hover:text-purple-800
     }
 
+    .itemLink.router-link-exact-active {
+        color: #ffff;
+        background-color: #e12503;
+        padding: 10px 15px;
+        width: 100%;
+        display: block;
+    }
+
 }
 

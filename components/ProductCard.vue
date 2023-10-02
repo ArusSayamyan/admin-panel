@@ -30,7 +30,6 @@ const {product} = defineProps(['product']);
 const prodStore = useProductsStore()
 
 function addToCart(prod: any) {
-  // const count = 1;
   prodStore.addNewProduct({
     ...prod,
   })
