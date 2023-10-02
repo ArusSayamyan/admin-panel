@@ -6,6 +6,15 @@
           <img src="~/assets/img/logo.png" alt="logo">
         </li>
         <li class="listItem py-[10px] px-[15px] hover:bg-[#e12503] hover:text-white">
+          <NuxtLink to="/adminPanel" class="itemLink ">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mr-[5px]">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+            </svg>
+
+            <span class="capitalize">Dashboard</span>
+          </NuxtLink>
+        </li>
+        <li class="listItem py-[10px] px-[15px] hover:bg-[#e12503] hover:text-white">
           <NuxtLink to="/adminPanel/products" class="itemLink ">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="w-6 h-6 inline-block mr-[5px]">
@@ -62,8 +71,17 @@
         </li>
       </ul>
     </div>
-    <div class="ml-[200px] flex justify-end bg-gradient-to-r from-[#e12503] to-[#85060c] fixed max-w-[1336px] w-full">
+    <div class="ml-[200px] flex justify-end bg-gradient-to-r from-[#e12503] to-[#85060c] fixed max-w-[1336px] w-full z-20">
       <div class="p-2 max-w-fit box-border">
+        <NuxtLink to="/adminPanel/basket">
+        <div class="inline-block relative">
+          <span class="p-[5px] rounded-[50%] bg-[#ffff] text-[10px] text-red w-[12px] h-[12px] flex justify-center items-center absolute left-[-5px] top-[-4px]">{{countOfProds}}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6 cursor-pointer inline-block mr-[5px]">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          </svg>
+        </div>
+        </NuxtLink>
+
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white"
              class="w-6 h-6 mx-auto inline-block mr-[5px]">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -79,14 +97,15 @@
 </template>
 
 <script setup>
+import { useProductsStore } from '@/store/index'
+
+const prodStore = useProductsStore()
 const user = useSupabaseUser()
 const router = useRouter();
-
-console.log(user.value)
-
 const client = useSupabaseClient();
 
-console.log(user.value)
+//get selected products
+const prods = prodStore.getProducts
 
 const logout = async () => {
   try {
@@ -97,6 +116,17 @@ const logout = async () => {
     console.log(error)
   }
 };
+
+const countOfProds = computed(() => {
+  return prods.reduce((acc, item) => {
+    return acc + item.count
+  }, 0)
+})
+
+
+
+
+//get count of selected products
 </script>
 
 <style scoped>
