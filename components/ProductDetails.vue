@@ -1,6 +1,6 @@
 <template>
 <div class="card">
-  <div class="grid grid-cols-2 gap-10 md:grid-cols-1">
+  <div class="grid grid-cols-2 gap-10 mt-[80px]">
     <div class="p-7">
       <img :src="product.image" alt="thumb" class="mx-auto w-full my-7">
     </div>

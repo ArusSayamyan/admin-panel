@@ -5,11 +5,13 @@
         <h2 class="text-center mb-5 uppercase">Sign in</h2>
         <div class="flex flex-col mb-[15px]">
           <label for="lastname" class="pb-2">email</label>
-          <input type="email" name="lastname" v-model="mail" id="lastname" autocomplete="off" class="p-1.5 rounded outline-none">
+          <input type="email" name="lastname" v-model="mail" id="lastname" autocomplete="off"
+                 class="p-1.5 rounded outline-none">
         </div>
         <div class="flex flex-col mb-[15px]">
           <label for="password" class="pb-2">password</label>
-          <input type="password" name="password" v-model="pass" id="password" autocomplete="off" class="p-1.5 rounded outline-none">
+          <input type="password" name="password" v-model="pass" id="password" autocomplete="off"
+                 class="p-1.5 rounded outline-none">
         </div>
         <button type="submit" class="btn mx-auto block uppercase">sign in</button>
       </form>
@@ -62,23 +64,24 @@ const pass = ref()
 const repeatPassword = ref()
 
 async function submitForm() {
-   try {
-     const {data, error} = await client.auth.signUp({
-      email: regEmail.value,
-      password: regPassword.value
-    },
-         {
-           data: {
-             regName
-           }
-         }
+  try {
+    const {data, error} = await client.auth.signUp({
+          email: regEmail.value,
+          password: regPassword.value
+        },
+        {
+          data: {
+            first_name: 'John',
+            age: 27,
+          }
+        }
     )
-      regName.value = ''
-      regLastname.value = ''
-      regEmail.value = ''
-      regPassword.value = ''
-      repeatPassword.value = ''
-     if(error) throw error
+    regName.value = ''
+    regLastname.value = ''
+    regEmail.value = ''
+    regPassword.value = ''
+    repeatPassword.value = ''
+    if (error) throw error
   } catch (error) {
     console.log(error)
   }
@@ -94,7 +97,7 @@ async function signIn() {
     )
     regEmail.value = ''
     regPassword.value = ''
-    if(error) throw error
+    if (error) throw error
     await router.push('/adminPanel')
   } catch (error) {
     alert(error)
