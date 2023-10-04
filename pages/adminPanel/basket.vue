@@ -1,8 +1,8 @@
 <template>
 <div class="pt-[50px] p-4">
   <h1 class="text-2xl font-semibold text-center pt-[40px] uppercase">Favorite products</h1>
-  <div class="grid grid-cols-4 gap-5 mt-10 lg:grid-cols-3 md:grid-cols-2" v-if="prods.length > 0">
-    <div v-for="p in prods">
+  <div class="grid grid-cols-4 gap-5 mt-10 lg:grid-cols-3 md:grid-cols-2" v-if="length > 0">
+    <div v-for="p in prods.value">
       <ProductCard :product="p"></ProductCard>
     </div>
   </div>
@@ -11,10 +11,31 @@
 </template>
 
 <script setup>
-import { useProductsStore } from '@/store/index'
+const supabase = useSupabaseClient()
 
-const prodStore = useProductsStore()
-const prods = prodStore.getProducts
+const prods = reactive([])
+const length = ref(0)
+
+async function getFavProducts() {
+  try {
+    let { data: favProds, error } = await supabase
+        .from('products')
+        .select()
+    .eq('is_favorite', true)
+    if (error) {
+      console.error("Supabase error:", error);
+    } else {
+      prods.value = favProds
+      length.value = favProds.length
+    }
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+}
+
+onMounted(() => {
+  getFavProducts()
+})
 
 //select layout
 definePageMeta({

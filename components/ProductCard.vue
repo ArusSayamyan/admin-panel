@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <div class="flex justify-between">
-      <span class="font-bold text-[#6b7280] text-[20px]" v-if="!product.count">{{ product.price }}$</span>
+      <span class="font-bold text-[#6b7280] text-[20px]" v-if="router.currentRoute.value.path !== '/adminPanel/basket'">{{ product.price }}$</span>
       <span class="font-bold text-[#6b7280] text-[20px]" v-else>{{ product.price * product.count }}$</span>
-      <span @click="addToCart(product)" v-if="!product.count">
+      <span @click="incrementProductCount(product.id)"  v-if="router.currentRoute.value.path !== '/adminPanel/basket'">
      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6b7280"
           class="w-6 h-6 cursor-pointer">
       <path stroke-linecap="round" stroke-linejoin="round"
@@ -24,16 +24,38 @@
 </template>
 
 <script setup lang="ts">
-import {useProductsStore} from '@/store'
-
+const supabase = useSupabaseClient()
 const {product} = defineProps(['product']);
-const prodStore = useProductsStore()
+const router = useRouter();
 
-function addToCart(prod: any) {
-  prodStore.addNewProduct({
-    ...prod,
-  })
-  console.log(prodStore.selectedProds)
+async function incrementProductCount(productId: number) {
+  // Fetch the current count from the database
+  const { data, error } = await supabase
+      .from('products')
+      .select('count')
+      .eq('id', productId)
+      .single();
+
+  if (error) {
+    console.error('Error fetching product:', error);
+    return;
+  }
+
+  // Calculate the new count
+  const currentCount = data.count;
+  const newCount = currentCount + 1;
+
+  // Update the count in the database
+  const { updateError } = await supabase
+      .from('products')
+      .update({ count: newCount })
+      .eq('id', productId);
+
+  if (updateError) {
+    console.error('Error updating product count:', updateError);
+    return;
+  }
+
 }
 
 

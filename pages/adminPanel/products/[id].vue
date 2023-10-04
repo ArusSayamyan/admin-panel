@@ -10,15 +10,18 @@
 </template>
 
 <script setup>
-const {id} = useRoute().params;
-console.log(useRoute().params)
-const url = 'https://fakestoreapi.com/products/' + id
+const supabase = useSupabaseClient()
 
+const {id} = useRoute().params;
 //fetch the products
 
-const {data: product} = await useFetch(url, {key: id});
+let { data: product, error } = await supabase
+    .from('products')
+    .select("*")
+    .eq('id', id)
+    .single();
 
-if (!product.value) {
+if (!product) {
   throw createError({statusCode: 404, statusMessage: 'Product not found', fatal: true})
 }
 definePageMeta({

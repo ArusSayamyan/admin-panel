@@ -12,15 +12,39 @@
 </template>
 
 <script setup lang="ts">
+const supabase = useSupabaseClient()
 
+import {newProducts} from '~/store'
+const products = ref()
+const newProdStore = newProducts()
 definePageMeta({
   layout: 'admin-panel',
 })
 
-const { data: products } = await useFetch('https://fakestoreapi.com/products')
+onMounted(() => {
+  getProducts()
+})
+//GET ALL PRODUCTS
+async function getProducts() {
+  try {
+    let { data: prods, error } = await supabase
+        .from('products')
+        .select();
+    if (error) {
+      console.error("Supabase error:", error);
+    } else {
+       products.value = prods
+    }
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+}
 
 
-//for change head information for example title
+
+
+
+// for change head information for example title
 useHead({
   title: 'Nuxt theory | Merch'
 })
