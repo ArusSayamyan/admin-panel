@@ -15,5 +15,35 @@ export const useProductsStore = defineStore('prods', () => {
             }
     }
 
+
+
+
     return { selectedProds, addNewProduct, getProducts }
+})
+
+export const newProducts = defineStore('newProducts', () => {
+    const newProducts = ref([])
+
+    const getNewProducts = computed(() => newProducts.value)
+
+
+    function fetchItems() {
+        return fetch('https://fakestoreapi.com/products')
+            .then(response => response.json()).then(data => getAllProducts(data))
+            .catch(error => {
+                console.error('Error fetching items:', error);
+                return [];
+            });
+    }
+
+
+    function addProduct(payload) {
+        newProducts.value.push(payload)
+    }
+    function getAllProducts(payload) {
+        newProducts.value = payload
+    }
+
+
+    return { newProducts,getAllProducts, fetchItems, addProduct, getNewProducts }
 })

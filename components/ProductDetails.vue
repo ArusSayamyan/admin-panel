@@ -30,7 +30,6 @@ function addToCart(prod: any) {
   prodStore.addNewProduct({
     ...prod,
   })
-  console.log(prodStore.selectedProds)
 }
 </script>
 

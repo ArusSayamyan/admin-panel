@@ -14,6 +14,8 @@
 </template>
 
 <script setup>
+
+
 const series = [{
   name: 'men\'s clothing',
   data: [280, 200, 150, 70]
@@ -180,6 +182,10 @@ const areaOptions = {
     offsetX: -10
   }
 }
+
+
+
+
 
 definePageMeta({
   layout: 'admin-panel',
