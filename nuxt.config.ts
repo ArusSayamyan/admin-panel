@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import VueApexCharts from "vue3-apexcharts";
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt'],
+
+    modules: ['@nuxtjs/tailwindcss', '@nuxtjs/supabase', '@pinia/nuxt'],
+
     plugins: [
         { src: '~/plugins/vue-apexchart.js', mode: 'client' }],
     pinia: {
