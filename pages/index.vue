@@ -14,8 +14,8 @@
         <div class="absolute left-[18%] top-20 sm:left-[8%]">
           <img src="~/assets/img/arrow.svg" alt="">
         </div>
-        <MainBtn>
-          <p class="btn my-4 max-w-[120px] text-center bg-[#FF413D] mx-auto mt-[65px]">Shop Now</p>
+        <MainBtn :to="'/login'">
+          <p class="btn my-4 max-w-[120px] text-center bg-[#FF413D] mx-auto mt-[65px]">sign in</p>
         </MainBtn>
       </div>
       <div class="absolute left-0 top-[120px] md:hidden xl:top-[180px]">
@@ -29,25 +29,6 @@
 </template>
 
 <script setup>
-const router = useRouter();
-
 const {product} = defineProps(['product']);
-const {data: products} = await useFetch('https://fakestoreapi.com/products')
-const addedCategories = {};
-
-const filteredArray = [];
-
-for (const item of products.value) {
-  const {category} = item;
-  if (!addedCategories[category]) {
-    addedCategories[category] = true;
-    filteredArray.push(item);
-  }
-}
-
 
 </script>
-
-<style scoped>
-
-</style>

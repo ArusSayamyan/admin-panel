@@ -19,7 +19,7 @@
 
     <div class="register max-w-[450px] container">
       <form action="" class="registerForm container border-2 p-4 bg-[#8881] rounded" @submit.prevent="submitForm">
-        <h2 class="text-center mb-5 uppercase">Registration</h2>
+        <h2 class="text-center mb-5 uppercase">Sign up</h2>
         <div class="flex flex-col mb-[15px]">
           <label for="regName" class="pb-2">name</label>
           <input type="text" name="name" id="regName" v-model="regName" autocomplete="off"
@@ -40,12 +40,7 @@
           <input type="password" name="newPassword" autocomplete="off" v-model="regPassword" id="newPassword"
                  class="p-1.5 rounded outline-none">
         </div>
-        <div class="flex flex-col mb-[15px]">
-          <label for="password" class="pb-2">repeat password</label>
-          <input type="password" name="repeat" id="repeat" v-model="repeatPassword" autocomplete="off"
-                 class="p-1.5 rounded outline-none">
-        </div>
-        <button type="submit" class="btn mx-auto block uppercase">Register</button>
+        <button type="submit" class="btn mx-auto block uppercase">Sign up</button>
       </form>
     </div>
   </div>
@@ -59,28 +54,20 @@ const regName = ref()
 const regLastname = ref()
 const regEmail = ref()
 const regPassword = ref()
-const mail = ref()
-const pass = ref()
-const repeatPassword = ref()
+const mail = 'newadm1911@bk.ru'
+const pass = '1191MdaWen@'
 
 async function submitForm() {
   try {
     const {data, error} = await client.auth.signUp({
-          email: regEmail.value,
-          password: regPassword.value
-        },
-        {
-          data: {
-            first_name: 'John',
-            age: 27,
-          }
+          email: mail,
+          password: pass
         }
-    )
+  )
     regName.value = ''
     regLastname.value = ''
     regEmail.value = ''
     regPassword.value = ''
-    repeatPassword.value = ''
     if (error) throw error
   } catch (error) {
     console.log(error)
@@ -91,8 +78,8 @@ async function submitForm() {
 async function signIn() {
   try {
     const {error} = await client.auth.signInWithPassword({
-          email: mail.value,
-          password: pass.value,
+          email: mail,
+          password: pass,
         },
     )
     regEmail.value = ''
@@ -105,7 +92,3 @@ async function signIn() {
 }
 
 </script>
-
-<style scoped>
-
-</style>

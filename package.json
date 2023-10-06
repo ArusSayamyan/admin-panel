@@ -12,6 +12,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@unlok-co/nuxt-stripe": "^2.0.0",
     "nuxt": "^3.7.4",
     "tailwindcss": "^3.3.3",
     "vue": "^3.3.4",
@@ -19,9 +20,14 @@
   },
   "dependencies": {
     "@nuxtjs/supabase": "^1.1.2",
+    "@paypal/paypal-js": "^7.0.3",
     "@pinia/nuxt": "^0.4.11",
     "@supabase/supabase-js": "^2.37.0",
+    "@vue-stripe/vue-stripe": "^4.5.0",
     "apexcharts": "^3.43.0",
+    "bcrypt": "^5.1.1",
+    "h3": "^1.8.2",
+    "nuxt-stripe-module": "^3.2.0",
     "pinia": "^2.1.6",
     "vue-apexcharts": "^1.6.2",
     "vue3-apexcharts": "^1.4.4",

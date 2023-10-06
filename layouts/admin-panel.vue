@@ -88,24 +88,18 @@
 <script setup>
 
 const supabase = useSupabaseClient()
-
-
-import { useProductsStore } from '~/store'
-
-const prodStore = useProductsStore()
 const user = useSupabaseUser()
 const adminName = ref()
 const router = useRouter();
 const client = useSupabaseClient();
-const totalCount = ref(0)
+const totalCount = ref()
 //get selected products
-const prods = prodStore.getProducts
 
 const logout = async () => {
   try {
     const {error} = await client.auth.signOut();
     if (error) throw error
-    await router.push('/')
+    await router.push('/login')
   } catch (error) {
     console.log(error)
   }
@@ -138,26 +132,24 @@ async function getCountFavProducts() {
     if (error) {
       console.error("Supabase error:", error);
     } else {
-      totalCount.value = obj.reduce((acc, item) => {
+      totalCount.value = computed(()=> {
+          return obj.reduce((acc, item) => {
           return acc + item.count
         }, 0)
+      })
     }
   } catch (err) {
     console.error("An error occurred:", err);
   }
+
 }
 
 
 
-onMounted(() => {
-  getAdmins()
-  getCountFavProducts()
+
+onMounted(async () => {
+  await getAdmins()
+  await getCountFavProducts()
 })
 
-
-//get count of selected products
 </script>
-
-<style scoped>
-
-</style>
